@@ -1,4 +1,4 @@
-import { User } from '../models/user.model';
+import { User } from '../models/user.model.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
@@ -71,6 +71,7 @@ export const login = async (req, res) => {
       userId: user._id,
     };
 
+    // jwt need three things .i.e payload, secret key and expiry date
     const token = jwt.sign(tokenData, process.env.SECRET_KEY, {
       expiresIn: '1d',
     });

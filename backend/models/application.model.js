@@ -1,5 +1,5 @@
-import mongoose, { model, models, Schema } from 'mongoose';
-
+import mongoose from 'mongoose';
+const { Schema, model, models } = mongoose;
 const applicationSchema = new Schema(
   {
     job: { type: mongoose.Schema.Types.ObjectId, ref: 'Job', required: true },
