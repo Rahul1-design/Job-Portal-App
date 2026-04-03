@@ -61,7 +61,7 @@ export const login = async (req, res) => {
     }
 
     if (role !== user.role) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "Account doesn't exist with current role.",
         success: false,
       });
@@ -114,15 +114,9 @@ export const updateProfile = async (req, res) => {
     const { fullname, email, phoneNumber, bio, skills } = req.body;
     const file = req.file;
 
-    if (!fullname || !email || !phoneNumber || !bio || !skills) {
-      return res
-        .status(400)
-        .json({ message: 'Something is missing', success: false });
-    }
-
     //TODO cloudinary will come here for the file
 
-    const skillsArray = skills.split(',');
+    const skillsArray = skills ? skills.split(',') : undefined;
     const userId = req.id; //TODO
     let user = await User.findById(userId);
 
@@ -133,11 +127,11 @@ export const updateProfile = async (req, res) => {
     }
 
     //updating the user info
-    user.fullname = fullname;
-    user.email = email;
-    user.phoneNumber = phoneNumber;
-    user.profile.bio = bio;
-    user.profile.skills = skillsArray;
+    if (fullname) user.fullname = fullname;
+    if (email) user.email = email;
+    if (phoneNumber) user.phoneNumber = phoneNumber;
+    if (bio) user.profile.bio = bio;
+    if (skills) user.profile.skills = skillsArray;
 
     //TODO resume will come here later
 
