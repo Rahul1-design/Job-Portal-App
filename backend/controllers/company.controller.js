@@ -21,9 +21,11 @@ export const registerCompany = async (req, res) => {
       userId: req.id,
     });
 
-    return res
-      .status(201)
-      .json({ message: 'Company registered successfully.', success: true });
+    return res.status(201).json({
+      message: 'Company registered successfully.',
+      company,
+      success: true,
+    });
   } catch (error) {
     console.log(error);
     return res
@@ -53,7 +55,7 @@ export const getCompany = async (req, res) => {
 export const getCompanyById = async (req, res) => {
   try {
     const companyId = req.params.id;
-    const company = await Company.find(CompanyId);
+    const company = await Company.find(companyId);
 
     if (!company) {
       return res
