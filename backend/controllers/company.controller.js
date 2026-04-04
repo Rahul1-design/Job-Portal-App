@@ -78,7 +78,7 @@ export const updateCompany = async (req, res) => {
     const company = await Company.findByIdAndUpdate(
       req.params.id,
       updatedData,
-      { return: true }
+      { new: true }
     );
 
     if (!company) {
