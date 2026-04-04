@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 const { Schema, model, models } = mongoose;
 const companySchema = new Schema(
   {
-    name: { type: String, required: true },
+    name: { type: String, required: true, unique: true },
     description: { type: String },
     website: { type: String },
     location: { type: String },
