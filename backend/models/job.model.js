@@ -20,7 +20,9 @@ const jobSchema = new Schema(
       ref: 'User',
       required: true,
     },
-    application: { type: mongoose.Schema.Types.ObjectId, ref: 'Application' },
+    applications: [
+      { type: mongoose.Schema.Types.ObjectId, ref: 'Application' },
+    ],
   },
   { timestamps: true }
 );
