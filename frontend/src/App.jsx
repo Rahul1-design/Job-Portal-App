@@ -1,9 +1,10 @@
 import "./App.css";
+import Navbar from "./components/shared/Navbar";
 
 function App() {
   return (
     <>
-      <h1 className="">Let's build the Job Portal</h1>
+      <Navbar />
     </>
   );
 }
