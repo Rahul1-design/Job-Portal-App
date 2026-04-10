@@ -17,24 +17,28 @@ function Navbar() {
         </div>
         <div className="flex items-center gap-12">
           <ul className="flex font-medium items-center gap-5">
-            <li>Home</li>
-            <li>Jobs</li>
-            <li>Browse</li>
+            <Link to="/">Home</Link>
+            <Link>Jobs</Link>
+            <Link>Browse</Link>
           </ul>
 
           {!user ? (
             <div className="flex items-center gap-2">
-              <Button
-                className={`cursor-pointer hover:brightness-90`}
-                variant="outline"
-              >
-                Login
-              </Button>
-              <Button
-                className={`cursor-pointer bg-[#6A38C2] hover:bg-[#4e209e]`}
-              >
-                Signup
-              </Button>
+              <Link to="/login">
+                <Button
+                  className={`cursor-pointer hover:brightness-90`}
+                  variant="outline"
+                >
+                  Login
+                </Button>
+              </Link>
+              <Link to="/signup">
+                <Button
+                  className={`cursor-pointer bg-[#6A38C2] hover:bg-[#4e209e]`}
+                >
+                  Signup
+                </Button>
+              </Link>
             </div>
           ) : (
             <Popover>
