@@ -8,10 +8,16 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { USER_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "@/redux/authSlice";
+import { Loader2 } from "lucide-react";
 
 const Login = () => {
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+  const { loading } = useSelector((store) => store.auth);
 
   const changeIcon = () => {
     setOpen(!open);
@@ -31,6 +37,7 @@ const Login = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
+      dispatch(setLoading(true));
       const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
         headers: {
           "Content-Type": "application/json",
@@ -44,7 +51,9 @@ const Login = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.res.data.message);
+      toast.error(error.response.data.message);
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 
@@ -134,12 +143,22 @@ const Login = () => {
               </div>
             </RadioGroup>
           </div>
-          <Button
-            type="submit"
-            className={`cursor-pointer w-full my-4 hover:bg-gray-700 p-5`}
-          >
-            Login
-          </Button>
+          {loading ? (
+            <Button
+              className={`cursor-pointer w-full my-4 hover:bg-gray-700 p-5 `}
+            >
+              <Loader2 className="animate-spin mr-2 h-4 w-4" />
+              Please wait
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              className={`cursor-pointer w-full my-4 hover:bg-gray-700 p-5`}
+            >
+              Login
+            </Button>
+          )}
+
           <span className="flex justify-center">
             Don't have an account?{" "}
             <Link
