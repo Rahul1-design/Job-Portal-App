@@ -4,9 +4,10 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { LogOut, User2 } from "lucide-react";
+import { useSelector } from "react-redux";
 
 function Navbar() {
-  const [user, setuser] = useState(false);
+  const { user } = useSelector((store) => store.auth);
   return (
     <div className=" bg-white">
       <div className="flex items-center mx-auto justify-between max-w-7xl h-16">
@@ -59,7 +60,7 @@ function Navbar() {
                     <AvatarImage src="https://github.com/shadcn.png" />
                   </Avatar>
                   <div>
-                    <h4 className="font-medium">Rahul Shrestha</h4>
+                    <h4 className="font-medium">{user.fullname}</h4>
                     <p className="text-sm text-muted-foreground">
                       Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                     </p>
