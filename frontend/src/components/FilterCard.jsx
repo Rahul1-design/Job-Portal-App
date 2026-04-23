@@ -28,21 +28,24 @@ const FilterCard = () => {
     <div className="w-full bg-white p-3 rounded-md">
       <h2 className="text-xl font-bold">Filter Jobs</h2>
       <hr className="mt-3" />
-      <RadioGroup>
-        {filterData.map((data, index) => (
-          <div>
-            <h2 className="font-bold text-lg">{data.filterType}</h2>
+      {filterData.map((data, index) => (
+        <div key={index}>
+          <h2 className="font-bold text-lg">{data.filterType}</h2>
+          <RadioGroup>
             {data.array.map((item, index) => {
               return (
-                <div className="flex gap-3 items-center my-2 space-x-2 ml-5">
+                <div
+                  key={index}
+                  className="flex gap-3 items-center my-0.5 space-x-2 ml-5"
+                >
                   <RadioGroupItem value={item} />
                   <Label>{item}</Label>
                 </div>
               );
             })}
-          </div>
-        ))}
-      </RadioGroup>
+          </RadioGroup>
+        </div>
+      ))}
     </div>
   );
 };
