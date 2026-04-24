@@ -74,7 +74,7 @@ const Profile = () => {
         </div>
       </div>
       <div className="max-md:container max-w-4xl  mx-auto bg-white rounded-2xl ">
-        <h3 className="">Applied Jobs</h3>
+        <h3 className="font-bold text-lg my-5">Applied Jobs</h3>
 
         {/* Application Table Component */}
         <AppliedJobTable />
