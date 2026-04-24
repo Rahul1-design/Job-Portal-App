@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -70,7 +69,7 @@ function Navbar() {
                   <div className="cursor-pointer flex items-center gap-2">
                     <User2 />
                     <Button className={`cursor-pointer`} variant="link">
-                      View Profile
+                      <Link to="/profile">View Profile</Link>
                     </Button>
                   </div>
                   <div className="cursor-pointer flex items-center gap-2">
