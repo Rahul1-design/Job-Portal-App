@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "./shared/Navbar";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
@@ -7,12 +7,14 @@ import { useSelector } from "react-redux";
 import { Badge } from "./ui/badge";
 import { Label } from "./ui/label";
 import AppliedJobTable from "./AppliedJobTable";
+import UpdateProfileDialog from "./UpdateProfileDialog";
 
 const skills = ["HTML", "CSS", "Javascript", "React", "Git", "MongoDB"];
 
 const isResume = true;
 
 const Profile = () => {
+  const [open, setOpen] = useState(false);
   const { user } = useSelector((store) => store.auth);
   return (
     <div>
@@ -27,25 +29,29 @@ const Profile = () => {
               />
             </Avatar>
             <div>
-              <h2 className="font-medium text-xl">{user.fullname}</h2>
+              <h2 className="font-medium text-xl">{user?.fullname}</h2>
               <p>
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                 Impedit, eligendi in?
               </p>
             </div>
           </div>
-          <Button variant="outline" className="text-right cursor-pointer">
+          <Button
+            onClick={() => setOpen(true)}
+            variant="outline"
+            className="text-right cursor-pointer"
+          >
             <Pen />
           </Button>
         </div>
         <div className="my-5">
           <div className="flex gap-4 my-2">
             <Mail />
-            <span>{user.email}</span>
+            <span>{user?.email}</span>
           </div>
           <div className="flex gap-4 my-2">
             <Phone />
-            <span>{user.phoneNumber}</span>
+            <span>{user?.phoneNumber}</span>
           </div>
         </div>
         <div className="my-5">
@@ -79,6 +85,7 @@ const Profile = () => {
         {/* Application Table Component */}
         <AppliedJobTable />
       </div>
+      <UpdateProfileDialog open={open} setOpen={setOpen} />
     </div>
   );
 };
