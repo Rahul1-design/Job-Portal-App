@@ -50,6 +50,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     }
 
     try {
+      setLoading(true);
       const res = await axios.post(
         `${USER_API_END_POINT}/profile/update`,
         formData,
@@ -66,7 +67,9 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.res.data.message);
+      toast.error(error.data.message);
+    } finally {
+      setLoading(false);
     }
     setOpen(false);
     console.log(input);
@@ -175,6 +178,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
             <DialogFooter className={``}>
               {loading ? (
                 <Button
+                  disabled={loading}
                   className={`w-full my-4  cursor-pointer hover:bg-gray-800`}
                 >
                   <Loader2 className="animate-spin w-4 h-4 mr-2" />

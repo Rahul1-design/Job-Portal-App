@@ -57,7 +57,7 @@ const Profile = () => {
             {user?.profile?.skills.length <= 0 ? (
               <span>NA</span>
             ) : (
-              user.profile.skills.map((item, index) => (
+              user?.profile?.skills.map((item, index) => (
                 <Badge key={index}>{item}</Badge>
               ))
             )}
@@ -71,7 +71,7 @@ const Profile = () => {
               href="https://www.youtube.com/watch?v=3NnlWiBCLeo"
               target="_blank"
             >
-              Kim Chaweon MERN Stack
+              {user?.profile?.resumeOriginalName}
             </a>
           ) : (
             <span>NA</span>
