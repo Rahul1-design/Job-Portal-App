@@ -3,6 +3,7 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -78,14 +79,18 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
 
   return (
     <div>
-      <Dialog open={open}>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent
           className={`sm:max-w-106.25`}
           onInteractOutside={() => setOpen(false)}
+          showCloseButton={true}
         >
           <DialogHeader>
             <DialogTitle>Update Profile</DialogTitle>
           </DialogHeader>
+          <DialogDescription>
+            Update your personal information and resume here.
+          </DialogDescription>
           <form onSubmit={submitHandler}>
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-1">
@@ -93,10 +98,11 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                   Name
                 </Label>
                 <Input
+                  type="text"
                   onChange={changeEventHandler}
                   value={input.fullname}
                   id="name"
-                  name="name"
+                  name="fullname"
                   className={`col-span-3`}
                 />
               </div>
@@ -105,6 +111,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                   Email
                 </Label>
                 <Input
+                  type="email"
                   onChange={changeEventHandler}
                   value={input.email}
                   id="email"
@@ -117,10 +124,11 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                   Number
                 </Label>
                 <Input
+                  type="text"
                   onChange={changeEventHandler}
                   value={input.phoneNumber}
                   id="number"
-                  name="number"
+                  name="phoneNumber"
                   className={`col-span-3`}
                 />
               </div>
@@ -129,6 +137,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                   Bio
                 </Label>
                 <Input
+                  type="text"
                   onChange={changeEventHandler}
                   value={input.bio}
                   id="bio"
@@ -141,6 +150,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                   Skills
                 </Label>
                 <Input
+                  type="text"
                   onChange={changeEventHandler}
                   value={input.skills}
                   id="skills"

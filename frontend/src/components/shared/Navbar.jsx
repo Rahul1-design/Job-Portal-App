@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
@@ -7,11 +7,15 @@ import { useSelector } from "react-redux";
 
 function Navbar() {
   const { user } = useSelector((store) => store.auth);
+  const navigate = useNavigate();
   return (
     <div className=" bg-white">
       <div className="flex items-center mx-auto justify-between max-w-7xl h-16">
         <div>
-          <h1 className="text-2xl ">
+          <h1
+            onClick={() => navigate("/")}
+            className="text-2xl font-bold cursor-pointer"
+          >
             Job<span className="text-[#F83002]">Portal</span>
           </h1>
         </div>

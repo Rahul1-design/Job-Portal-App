@@ -9,7 +9,7 @@ import { Label } from "./ui/label";
 import AppliedJobTable from "./AppliedJobTable";
 import UpdateProfileDialog from "./UpdateProfileDialog";
 
-const skills = ["HTML", "CSS", "Javascript", "React", "Git", "MongoDB"];
+// const skills = ["HTML", "CSS", "Javascript", "React", "Git", "MongoDB"];
 
 const isResume = true;
 
@@ -30,10 +30,7 @@ const Profile = () => {
             </Avatar>
             <div>
               <h2 className="font-medium text-xl">{user?.fullname}</h2>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Impedit, eligendi in?
-              </p>
+              <p>{user?.profile?.bio}</p>
             </div>
           </div>
           <Button
@@ -57,10 +54,12 @@ const Profile = () => {
         <div className="my-5">
           <h2>Skills</h2>
           <div className="flex gap-2">
-            {skills.length <= 0 ? (
+            {user?.profile?.skills.length <= 0 ? (
               <span>NA</span>
             ) : (
-              skills.map((item, index) => <Badge key={index}>{item}</Badge>)
+              user.profile.skills.map((item, index) => (
+                <Badge key={index}>{item}</Badge>
+              ))
             )}
           </div>
         </div>
