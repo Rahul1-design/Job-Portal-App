@@ -67,9 +67,11 @@ const Profile = () => {
           <Label className={`text-md font-bold`}>Resume</Label>
           {isResume ? (
             <a
+              onClick={() => console.log(user?.profile?.resume)}
               className="text-blue-400 w-full hover:underline italic"
-              href={user?.profile?.resume}
+              href={`https://docs.google.com/viewer?url=${encodeURIComponent(user?.profile?.resume)}&embedded=true`}
               target="_blank"
+              rel="noopener noreferrer"
             >
               {user?.profile?.resumeOriginalName}
             </a>
