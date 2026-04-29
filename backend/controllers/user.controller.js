@@ -14,11 +14,20 @@ export const register = async (req, res) => {
         .json({ message: 'Something is missing', success: false });
     }
 
+    const file = req.file;
+
     const user = await User.findOne({ email });
     if (user) {
       return res
         .status(400)
         .json({ message: 'User already exist in this email.', sucess: false });
+    }
+    let cloudResponse;
+    if (file) {
+      const fileURI = getDataUri(file);
+      cloudResponse = await cloudinary.uploader.upload(fileURI.content, {
+        resource_type: 'raw',
+      });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -28,6 +37,9 @@ export const register = async (req, res) => {
       phoneNumber,
       password: hashedPassword,
       role,
+      profile: {
+        profilePhoto: cloudResponse.secure_url,
+      },
     });
 
     return res
