@@ -31,7 +31,7 @@ export const applyjob = async (req, res) => {
     if (!job) {
       return res
         .status(400)
-        .status({ message: 'Job not found.', success: false });
+        .json({ message: 'Job not found.', success: false });
     }
 
     const newApplication = await Application.create({
@@ -119,7 +119,7 @@ export const updateStatus = async (req, res) => {
 
     return res
       .status(201)
-      .json({ message: 'Status updated successfully', sucess: true });
+      .json({ message: 'Status updated successfully', success: true });
   } catch (error) {
     console.log(error);
   }

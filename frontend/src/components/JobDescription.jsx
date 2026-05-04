@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { useParams } from "react-router-dom";
-import { JOB_API_END_POINT } from "@/utils/constant";
+import { APPLICATION_API_END_POINT, JOB_API_END_POINT } from "@/utils/constant";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { setSingleJob } from "@/redux/jobSlice";
+import { toast } from "sonner";
 
 const JobDescription = () => {
   const params = useParams();
@@ -13,6 +14,24 @@ const JobDescription = () => {
   const dispatch = useDispatch();
   const { singleJob } = useSelector((store) => store.job);
   const { user } = useSelector((store) => store.auth);
+
+  const applyJobHandler = async () => {
+    try {
+      const res = await axios.post(
+        `${APPLICATION_API_END_POINT}/apply/${jobId}`,
+        {
+          withCredentials: true,
+        },
+      );
+      console.log(res.data);
+      if (res.data.success) {
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  };
 
   useEffect(() => {
     const fetchSingleJob = async () => {
@@ -24,13 +43,16 @@ const JobDescription = () => {
           dispatch(setSingleJob(res.data.job));
         }
       } catch (error) {
-        console.log(error);
+        console.log(error.response.data.message);
       }
     };
     fetchSingleJob();
   }, [dispatch, jobId]);
 
-  const isApplied = true;
+  const isApplied =
+    singleJob?.applications?.some(
+      (application) => application.applicant === user?._id,
+    ) || false;
   return (
     <div className="container mx-auto my-10">
       <div className="flex justify-between items-center">
@@ -58,6 +80,7 @@ const JobDescription = () => {
           </div>
         </div>
         <Button
+          onClick={isApplied ? null : applyJobHandler}
           disabled={isApplied}
           className={`rounded-lg ${isApplied ? "bg-gray-600 cursor-not-allowed" : "bg-[#7209b7] hover:brightness-85 cursor-pointer"} `}
         >

@@ -145,7 +145,6 @@ export const updateProfile = async (req, res) => {
     if (bio) user.profile.bio = bio;
     if (skills) user.profile.skills = skillsArray;
 
-    //TODO resume have come here
     if (file) {
       const fileURI = getDataUri(file);
       const cloudResponse = await cloudinary.uploader.upload(fileURI.content, {
