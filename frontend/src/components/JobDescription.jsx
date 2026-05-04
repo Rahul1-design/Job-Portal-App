@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { useParams } from "react-router-dom";
@@ -15,16 +15,33 @@ const JobDescription = () => {
   const { singleJob } = useSelector((store) => store.job);
   const { user } = useSelector((store) => store.auth);
 
+  // returns true if the job is already applied
+  const isInitiallyApplied =
+    singleJob?.applications?.some(
+      (application) => application.applicant === user?._id,
+    ) || false;
+
+  const [isApplied, setisApplied] = useState(isInitiallyApplied);
+
   const applyJobHandler = async () => {
     try {
       const res = await axios.post(
         `${APPLICATION_API_END_POINT}/apply/${jobId}`,
+        {},
         {
           withCredentials: true,
         },
       );
       console.log(res.data);
       if (res.data.success) {
+        setisApplied(true); //Update the local state
+
+        // Helps us to update the UI in real time
+        const updatedSingleJob = {
+          ...singleJob,
+          applications: [...singleJob.applications, { applicant: user?._id }],
+        };
+        dispatch(setSingleJob(updatedSingleJob));
         toast.success(res.data.message);
       }
     } catch (error) {
@@ -41,6 +58,11 @@ const JobDescription = () => {
         });
         if (res.data.success) {
           dispatch(setSingleJob(res.data.job));
+          setisApplied(
+            res.data.job.applications.some(
+              (application) => application.applicant === user?._id,
+            ),
+          ); // ensures it is synced with fetched data
         }
       } catch (error) {
         console.log(error.response.data.message);
@@ -49,10 +71,6 @@ const JobDescription = () => {
     fetchSingleJob();
   }, [dispatch, jobId]);
 
-  const isApplied =
-    singleJob?.applications?.some(
-      (application) => application.applicant === user?._id,
-    ) || false;
   return (
     <div className="container mx-auto my-10">
       <div className="flex justify-between items-center">
