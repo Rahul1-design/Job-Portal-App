@@ -172,3 +172,16 @@ export const updateProfile = async (req, res) => {
     console.log(error);
   }
 };
+
+export const getCurrentUser = async (req, res) => {
+  try {
+    const userId = req.id;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(401).json({ message: 'No user ', success: false });
+    }
+    return res.status(201).json({ success: true, user });
+  } catch (error) {
+    console.log(error);
+  }
+};

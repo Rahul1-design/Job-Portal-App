@@ -9,6 +9,7 @@ import Jobs from "./components/Jobs";
 import Browse from "./components/Browse";
 import Profile from "./components/Profile";
 import JobDescription from "./components/JobDescription";
+import useGetCurrentUser from "./components/hooks/useGetCurrentUser";
 
 const appRouter = createBrowserRouter([
   {
@@ -42,6 +43,7 @@ const appRouter = createBrowserRouter([
 ]);
 
 function App() {
+  useGetCurrentUser();
   return (
     <>
       <RouterProvider router={appRouter} />
