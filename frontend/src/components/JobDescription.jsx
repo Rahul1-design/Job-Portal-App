@@ -69,7 +69,7 @@ const JobDescription = () => {
       }
     };
     fetchSingleJob();
-  }, [dispatch, jobId]);
+  }, [dispatch, jobId, user?._id]);
 
   return (
     <div className="container mx-auto my-10">
