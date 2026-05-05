@@ -180,7 +180,15 @@ export const getCurrentUser = async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: 'No user ', success: false });
     }
-    return res.status(201).json({ success: true, user });
+    const safeUser = {
+      _id: user._id,
+      fullname: user.fullname,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+      role: user.role,
+      profile: user.profile,
+    };
+    return res.status(200).json({ success: true, user: safeUser });
   } catch (error) {
     console.log(error);
   }
