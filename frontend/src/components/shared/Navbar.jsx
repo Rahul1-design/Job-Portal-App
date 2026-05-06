@@ -95,7 +95,11 @@ function Navbar() {
                   <Avatar className={`cursor-pointer`}>
                     <AvatarImage src={user?.profile?.profilePhoto} />
                   </Avatar>
-                  <div className="flex items-center">
+                  <div
+                    className={
+                      user?.role === "recruiter" ? "flex items-center" : ""
+                    }
+                  >
                     <h4 className="font-medium text-[16px]">{user.fullname}</h4>
                     <p className="text-sm text-muted-foreground">
                       {user?.profile?.bio}

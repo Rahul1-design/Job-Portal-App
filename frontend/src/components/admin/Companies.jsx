@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../shared/Navbar";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import CompaniesTables from "./CompaniesTables";
 
 const Companies = () => {
   return (
@@ -15,6 +16,9 @@ const Companies = () => {
             placeholder="Filter by name"
           />
           <Button>New Company</Button>
+        </div>
+        <div>
+          <CompaniesTables />
         </div>
       </div>
     </div>
