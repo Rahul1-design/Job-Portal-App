@@ -3,8 +3,10 @@ import Navbar from "../shared/Navbar";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import CompaniesTables from "./CompaniesTables";
+import { useNavigate } from "react-router-dom";
 
 const Companies = () => {
+  const navigate = useNavigate();
   return (
     <div>
       <Navbar />
@@ -15,7 +17,12 @@ const Companies = () => {
             className={`w-fit`}
             placeholder="Filter by name"
           />
-          <Button>New Company</Button>
+          <Button
+            className={`cursor-pointer hover:bg-gray-500`}
+            onClick={() => navigate("/admin/companies/create")}
+          >
+            New Company
+          </Button>
         </div>
         <div>
           <CompaniesTables />

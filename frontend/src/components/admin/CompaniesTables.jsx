@@ -36,13 +36,13 @@ const CompaniesTables = () => {
           </TableCell>
           <TableCell>Company Name</TableCell>
           <TableCell>5-6-2026</TableCell>
-          <TableCell className={`text-right cursor-pointer`}>
+          <TableCell className={`text-right `}>
             <Popover>
               <PopoverTrigger>
-                <MoreHorizontal />
+                <MoreHorizontal className="cursor-pointer" />
               </PopoverTrigger>
               <PopoverContent className={`w-32 `}>
-                <div className="flex items-center gap-2 cursor-pointer w-fit">
+                <div className="flex items-center gap-2 w-fit">
                   <Edit2 className="w-5" />
                   <span className="font-medium">Edit</span>
                 </div>
