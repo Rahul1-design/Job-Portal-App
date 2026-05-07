@@ -12,10 +12,7 @@ import { setSingleCompany } from "@/redux/companySlice";
 
 const CompanyCreate = () => {
   const navigate = useNavigate();
-  const [companyName, setCompanyName] = useState();
-  const onChangeHandler = (e) => {
-    setCompanyName({ ...companyName, [e.target.name]: e.target.value });
-  };
+  const [companyName, setCompanyName] = useState("");
   const dispatch = useDispatch();
 
   const registerNewCompany = async () => {
@@ -42,6 +39,7 @@ const CompanyCreate = () => {
       }
     } catch (error) {
       console.log(error);
+      toast.error(error.response.data.message);
     }
   };
   return (
@@ -60,7 +58,7 @@ const CompanyCreate = () => {
         </Label>
         <Input
           name="CompanyName"
-          onChange={onChangeHandler}
+          onChange={(e) => setCompanyName(e.target.value)}
           id="1"
           type={`text`}
           className={`my-2 p-5`}
