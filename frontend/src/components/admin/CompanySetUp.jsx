@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import Navbar from "../shared/Navbar";
 import { Button } from "../ui/button";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import axios from "axios";
+import { COMPANY_API_END_POINT } from "@/utils/constant";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "sonner";
 
 const CompanySetUp = () => {
   const [input, setInput] = useState({
@@ -22,6 +26,11 @@ const CompanySetUp = () => {
     setInput({ ...input, file: e.target.files?.[0] });
   };
 
+  const params = useParams();
+  const jobId = params.id;
+
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState(false);
 
   const submitHandler = async (e) => {
@@ -35,8 +44,27 @@ const CompanySetUp = () => {
       formData.append("file", input.file);
     }
     try {
+      setLoading(true);
+      const res = await axios.put(
+        `${COMPANY_API_END_POINT}/update/${jobId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
+        },
+      );
+
+      if (res.data.success) {
+        toast.success(res.data.message);
+        navigate("/admin/companies");
+      }
     } catch (error) {
       console.log(error);
+      toast.error(error.response.data.message);
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -46,6 +74,7 @@ const CompanySetUp = () => {
         <form onSubmit={submitHandler}>
           <div className="flex items-center gap-5 p-8">
             <Button
+              onClick={() => navigate("/admin/companies")}
               variant="outline"
               className={`flex items-center gap-2 text-gray-500 font-semibold cursor-pointer`}
             >
@@ -100,12 +129,21 @@ const CompanySetUp = () => {
               />
             </div>
           </div>
-          <Button
-            type={"submit"}
-            className={`w-full mt-8 cursor-pointer hover:bg-gray-800 p-5`}
-          >
-            Update
-          </Button>
+          {loading ? (
+            <Button
+              className={`cursor-pointer w-full my-4 hover:bg-gray-700 p-5 `}
+            >
+              <Loader2 className="animate-spin mr-2 h-4 w-4" />
+              Please wait
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              className={`cursor-pointer w-full my-4 hover:bg-gray-700 p-5`}
+            >
+              Update
+            </Button>
+          )}
         </form>
       </div>
     </div>
