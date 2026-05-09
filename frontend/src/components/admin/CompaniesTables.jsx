@@ -26,29 +26,31 @@ const CompaniesTables = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableCell>
-            <Avatar>
-              <AvatarImage
-                src="https://images-platform.99static.com//WnnxETQYaEVDQZxa1ZVZVZjtO-4=/317x274:817x774/fit-in/590x590/99designs-contests-attachments/67/67571/attachment_67571500"
-                alt="Company Logo"
-              />
-            </Avatar>
-          </TableCell>
-          <TableCell>Company Name</TableCell>
-          <TableCell>5-6-2026</TableCell>
-          <TableCell className={`text-right `}>
-            <Popover>
-              <PopoverTrigger>
-                <MoreHorizontal className="cursor-pointer" />
-              </PopoverTrigger>
-              <PopoverContent className={`w-32 `}>
-                <div className="flex items-center gap-2 w-fit">
-                  <Edit2 className="w-5" />
-                  <span className="font-medium">Edit</span>
-                </div>
-              </PopoverContent>
-            </Popover>
-          </TableCell>
+          <TableRow>
+            <TableCell>
+              <Avatar>
+                <AvatarImage
+                  src="https://images-platform.99static.com//WnnxETQYaEVDQZxa1ZVZVZjtO-4=/317x274:817x774/fit-in/590x590/99designs-contests-attachments/67/67571/attachment_67571500"
+                  alt="Company Logo"
+                />
+              </Avatar>
+            </TableCell>
+            <TableCell>Company Name</TableCell>
+            <TableCell>5-6-2026</TableCell>
+            <TableCell className={`text-right `}>
+              <Popover>
+                <PopoverTrigger>
+                  <MoreHorizontal className="cursor-pointer" />
+                </PopoverTrigger>
+                <PopoverContent className={`w-32 `}>
+                  <div className="flex items-center gap-2 w-fit">
+                    <Edit2 className="w-5" />
+                    <span className="font-medium">Edit</span>
+                  </div>
+                </PopoverContent>
+              </Popover>
+            </TableCell>
+          </TableRow>
         </TableBody>
       </Table>
     </div>
