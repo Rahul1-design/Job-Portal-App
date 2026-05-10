@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../shared/Navbar";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import CompaniesTables from "./CompaniesTables";
 import { useNavigate } from "react-router-dom";
 import useGetAllCompany from "../hooks/useGetAllCompany";
+import { useDispatch } from "react-redux";
+import { setSearchCompanyByText } from "@/redux/companySlice";
 
 const Companies = () => {
   useGetAllCompany();
+  const dispatch = useDispatch();
+  const [input, setInput] = useState("");
+  // useEffect(() => {
+  //   dispatch(setSearchCompanyByText(input));
+  //   console.log(input);
+  // }, [dispatch, input]);
   const navigate = useNavigate();
   return (
     <div>
@@ -18,6 +26,11 @@ const Companies = () => {
             type={`text`}
             className={`w-fit`}
             placeholder="Filter by name"
+            onChange={(e) => {
+              setInput(e.target.value);
+              dispatch(setSearchCompanyByText(e.target.value));
+              console.log(e.target.value);
+            }}
           />
           <Button
             className={`cursor-pointer hover:bg-gray-500`}

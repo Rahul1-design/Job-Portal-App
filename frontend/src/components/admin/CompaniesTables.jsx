@@ -13,11 +13,11 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Edit2, MoreHorizontal } from "lucide-react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { COMPANY_API_END_POINT } from "@/utils/constant";
 
 const CompaniesTables = () => {
   const navigate = useNavigate();
   const { companies } = useSelector((store) => store.company);
+
   return (
     <div>
       <Table>
@@ -32,7 +32,9 @@ const CompaniesTables = () => {
         </TableHeader>
         <TableBody>
           {companies?.length <= 0 ? (
-            <TableCell>you haven't register the company yet.</TableCell>
+            <TableRow>
+              <TableCell>you haven't register the company yet.</TableCell>
+            </TableRow>
           ) : (
             <>
               {companies?.map((item) => {
@@ -55,7 +57,7 @@ const CompaniesTables = () => {
                         year: "numeric",
                       })}
                     </TableCell>
-                    <TableCell className={`text-right `}>
+                    <TableCell className={`text-right`}>
                       <Popover>
                         <PopoverTrigger>
                           <MoreHorizontal className="cursor-pointer" />
