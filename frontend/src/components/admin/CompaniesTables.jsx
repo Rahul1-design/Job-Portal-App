@@ -16,7 +16,17 @@ import { useNavigate } from "react-router-dom";
 
 const CompaniesTables = () => {
   const navigate = useNavigate();
-  const { companies } = useSelector((store) => store.company);
+  const { companies, searchCompanyByText } = useSelector(
+    (store) => store.company,
+  );
+
+  const filteredCompany = searchCompanyByText
+    ? companies.filter((company) =>
+        company?.name
+          ?.toLowerCase()
+          .includes(searchCompanyByText.toLowerCase()),
+      )
+    : companies;
 
   return (
     <div>
@@ -31,13 +41,15 @@ const CompaniesTables = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {companies?.length <= 0 ? (
+          {filteredCompany?.length <= 0 ? (
             <TableRow>
-              <TableCell>you haven't register the company yet.</TableCell>
+              <TableCell className={` text-lg text-bold`}>
+                You haven't registered the company yet.
+              </TableCell>
             </TableRow>
           ) : (
             <>
-              {companies?.map((item) => {
+              {filteredCompany?.map((item) => {
                 return (
                   <TableRow key={item._id}>
                     <TableCell>
