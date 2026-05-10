@@ -11,8 +11,13 @@ import {
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Edit2, MoreHorizontal } from "lucide-react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { COMPANY_API_END_POINT } from "@/utils/constant";
 
 const CompaniesTables = () => {
+  const navigate = useNavigate();
+  const { companies } = useSelector((store) => store.company);
   return (
     <div>
       <Table>
@@ -26,31 +31,55 @@ const CompaniesTables = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableCell>
-              <Avatar>
-                <AvatarImage
-                  src="https://images-platform.99static.com//WnnxETQYaEVDQZxa1ZVZVZjtO-4=/317x274:817x774/fit-in/590x590/99designs-contests-attachments/67/67571/attachment_67571500"
-                  alt="Company Logo"
-                />
-              </Avatar>
-            </TableCell>
-            <TableCell>Company Name</TableCell>
-            <TableCell>5-6-2026</TableCell>
-            <TableCell className={`text-right `}>
-              <Popover>
-                <PopoverTrigger>
-                  <MoreHorizontal className="cursor-pointer" />
-                </PopoverTrigger>
-                <PopoverContent className={`w-32 `}>
-                  <div className="flex items-center gap-2 w-fit">
-                    <Edit2 className="w-5" />
-                    <span className="font-medium">Edit</span>
-                  </div>
-                </PopoverContent>
-              </Popover>
-            </TableCell>
-          </TableRow>
+          {companies?.length <= 0 ? (
+            <TableCell>you haven't register the company yet.</TableCell>
+          ) : (
+            <>
+              {companies?.map((item) => {
+                return (
+                  <TableRow key={item._id}>
+                    <TableCell>
+                      <Avatar>
+                        <AvatarImage
+                          className={`w-8 h-7`}
+                          src={item?.logo}
+                          alt="Company Logo"
+                        />
+                      </Avatar>
+                    </TableCell>
+                    <TableCell>{item?.name}</TableCell>
+                    <TableCell>
+                      {new Date(item?.createdAt).toLocaleString("en-Us", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </TableCell>
+                    <TableCell className={`text-right `}>
+                      <Popover>
+                        <PopoverTrigger>
+                          <MoreHorizontal className="cursor-pointer" />
+                        </PopoverTrigger>
+                        <PopoverContent className={`w-32 `}>
+                          <div className="flex items-center gap-2 w-fit">
+                            <Edit2 className="w-5" />
+                            <span
+                              onClick={() =>
+                                navigate(`/admin/companies/${item._id}`)
+                              }
+                              className="font-medium cursor-pointer"
+                            >
+                              Edit
+                            </span>
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </>
+          )}
         </TableBody>
       </Table>
     </div>

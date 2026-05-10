@@ -8,7 +8,6 @@ import axios from "axios";
 import { COMPANY_API_END_POINT } from "@/utils/constant";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
-import { useSelector } from "react-redux";
 
 const CompanySetUp = () => {
   const [input, setInput] = useState({
@@ -28,12 +27,11 @@ const CompanySetUp = () => {
   };
 
   const params = useParams();
-  const jobId = params.id;
+  const companyId = params.id;
 
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
-  const { singleCompany } = useSelector((store) => store.company);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -48,7 +46,7 @@ const CompanySetUp = () => {
     try {
       setLoading(true);
       const res = await axios.put(
-        `${COMPANY_API_END_POINT}/update/${jobId}`,
+        `${COMPANY_API_END_POINT}/update/${companyId}`,
         formData,
         {
           headers: {
@@ -70,14 +68,29 @@ const CompanySetUp = () => {
     }
   };
   useEffect(() => {
-    setInput({
-      name: singleCompany?.name || "",
-      description: singleCompany?.description || "",
-      website: singleCompany?.website || "",
-      location: singleCompany?.location || "",
-      file: singleCompany?.file || null,
-    });
-  }, [singleCompany]);
+    const fetchSingleJob = async () => {
+      try {
+        const res = await axios.get(
+          `${COMPANY_API_END_POINT}/get/${companyId}`,
+          { withCredentials: true },
+        );
+        if (res.data.success) {
+          const company = res.data.company;
+          setInput({
+            name: company?.name || "",
+            description: company?.description || "",
+            website: company?.website || "",
+            location: company?.location || "",
+            file: company?.file || null,
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchSingleJob();
+  }, [companyId]);
 
   return (
     <div>

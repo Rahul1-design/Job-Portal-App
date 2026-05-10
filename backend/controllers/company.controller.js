@@ -84,7 +84,7 @@ export const updateCompany = async (req, res) => {
       const cloudinaryResponse = await cloudinary.uploader.upload(
         fileUri.content,
         {
-          resource_type: 'raw',
+          resource_type: 'image',
         }
       );
       logo = cloudinaryResponse.secure_url;
