@@ -13,6 +13,7 @@ import useGetCurrentUser from "./components/hooks/useGetCurrentUser";
 import Companies from "./components/admin/Companies";
 import CompanyCreate from "./components/admin/CompanyCreate";
 import CompanySetUp from "./components/admin/CompanySetUp";
+import AdminJobs from "./components/admin/AdminJobs";
 
 const appRouter = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ const appRouter = createBrowserRouter([
   {
     path: "/admin/companies/:id",
     element: <CompanySetUp />,
+  },
+  {
+    path: "/admin/jobs",
+    element: <AdminJobs />,
   },
 ]);
 

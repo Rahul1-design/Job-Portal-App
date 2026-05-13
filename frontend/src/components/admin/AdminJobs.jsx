@@ -3,12 +3,14 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setSearchCompanyByText } from "@/redux/companySlice";
 import AdminJobsTable from "./AdminJobsTable";
+import useGetAllAdminJobs from "../hooks/useGetAllAdminJobs";
+import { setSearchJobByText } from "@/redux/jobSlice";
 
 const AdminJobs = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  useGetAllAdminJobs();
   return (
     <div>
       <Navbar />
@@ -19,7 +21,7 @@ const AdminJobs = () => {
             className={`w-fit`}
             placeholder="Filter by name"
             onChange={(e) => {
-              dispatch(setSearchCompanyByText(e.target.value));
+              dispatch(setSearchJobByText(e.target.value));
               console.log(e.target.value);
             }}
           />
