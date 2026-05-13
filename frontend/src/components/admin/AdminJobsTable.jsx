@@ -13,18 +13,20 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Edit2, MoreHorizontal } from "lucide-react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Job from "../Job";
 
 const AdminJobsTable = () => {
   const navigate = useNavigate();
-  // const { companies, searchCompanyByText } = useSelector(
-  //   (store) => store.company,
-  // );
 
   const { allAdminJobs, searchJobByText } = useSelector((store) => store.job);
 
   const filteredJobs = searchJobByText
-    ? allAdminJobs.filter((job) =>
-        job.title.toLowerCase().includes(searchJobByText.toLowerCase()),
+    ? allAdminJobs.filter(
+        (job) =>
+          job?.title.toLowerCase().includes(searchJobByText.toLowerCase()) ||
+          job?.company?.name
+            .toLowerCase()
+            .includes(searchJobByText.toLowerCase()),
       )
     : allAdminJobs;
 
@@ -44,7 +46,7 @@ const AdminJobsTable = () => {
           {filteredJobs?.length <= 0 ? (
             <TableRow>
               <TableCell className={` text-lg text-bold`}>
-                You haven't registered the company yet.
+                You haven't registered the job yet.
               </TableCell>
             </TableRow>
           ) : (
