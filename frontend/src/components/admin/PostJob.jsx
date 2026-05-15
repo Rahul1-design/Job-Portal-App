@@ -45,15 +45,19 @@ const PostJob = () => {
 
   const [loading, setLoading] = useState(false);
 
-  // const selectChangeHandler = (value) => {
-  //   const selectedCompany = companies.find(
-  //     (company) => company?.name.toLowerCase() === value,
-  //   );
-  //   setInput({ ...input, companyId: value });
-  // };
+  const selectChangeHandler = (value) => {
+    const selectedCompany = companies.find(
+      (company) => company?.name.toLowerCase() === value,
+    );
+    setInput({ ...input, companyId: selectedCompany._id });
+  };
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    console.log("Submitting:", input); // add this
+    if (!input.companyId) {
+      toast.error("Please select a company");
+    }
     try {
       setLoading(true);
       const res = await axios.post(`${JOB_API_END_POINT}/post`, input, {
@@ -164,11 +168,7 @@ const PostJob = () => {
             </div>
             <div>
               {companies.length > 0 && (
-                <Select
-                  onValueChange={(value) =>
-                    setInput({ ...input, companyId: value })
-                  }
-                >
+                <Select onValueChange={selectChangeHandler}>
                   <SelectTrigger className={`w-full max-w-48 `}>
                     <SelectValue placeholder="Select a company" />
                   </SelectTrigger>
@@ -176,7 +176,10 @@ const PostJob = () => {
                     <SelectGroup>
                       {companies.map((company) => {
                         return (
-                          <SelectItem className={`p-3`} value={company?._id}>
+                          <SelectItem
+                            className={`p-3`}
+                            value={company?.name.toLowerCase()}
+                          >
                             {company?.name}
                           </SelectItem>
                         );

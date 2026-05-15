@@ -47,7 +47,7 @@ export const postJob = async (req, res) => {
 
     return res
       .status(201)
-      .json({ message: 'New job created successfully.', job, required: true });
+      .json({ message: 'New job created successfully.', job, success: true });
   } catch (error) {
     console.log(error);
   }
