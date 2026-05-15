@@ -13,8 +13,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import axios from "axios";
+import { JOB_API_END_POINT } from "@/utils/constant";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
+import { Loader2 } from "lucide-react";
+import useGetAllCompany from "../hooks/useGetAllCompany";
 
 const PostJob = () => {
+  useGetAllCompany();
   const [input, setInput] = useState({
     title: "",
     description: "",
@@ -29,22 +36,51 @@ const PostJob = () => {
 
   const { companies } = useSelector((store) => store.company);
 
+  const navigate = useNavigate();
+
   const changeEvenetHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
     console.log({ ...input, [e.target.name]: e.target.value });
   };
 
-  const selectChangeHandler = (value) => {
-    const selectedCompany = companies.find(
-      (company) => company?.name.toLowerCase() === value,
-    );
-    setInput({ ...input, companyId: selectedCompany });
+  const [loading, setLoading] = useState(false);
+
+  // const selectChangeHandler = (value) => {
+  //   const selectedCompany = companies.find(
+  //     (company) => company?.name.toLowerCase() === value,
+  //   );
+  //   setInput({ ...input, companyId: value });
+  // };
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const res = await axios.post(`${JOB_API_END_POINT}/post`, input, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      if (res.data.success) {
+        toast.success(res.data.message);
+        navigate("/admin/jobs");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <div>
       <Navbar />
       <div className="flex items-center justify-center w-screen my-5 ">
-        <form className="p-8 max-w-4xl w-full border border-gray-200 shadow-lg rounded-md">
+        <form
+          onSubmit={submitHandler}
+          className="p-8 max-w-4xl w-full border border-gray-200 shadow-lg rounded-md"
+        >
           <div className="grid grid-cols-2 gap-5 ">
             <div>
               <Label>Title</Label>
@@ -128,7 +164,11 @@ const PostJob = () => {
             </div>
             <div>
               {companies.length > 0 && (
-                <Select onValueChange={selectChangeHandler}>
+                <Select
+                  onValueChange={(value) =>
+                    setInput({ ...input, companyId: value })
+                  }
+                >
                   <SelectTrigger className={`w-full max-w-48 `}>
                     <SelectValue placeholder="Select a company" />
                   </SelectTrigger>
@@ -136,10 +176,7 @@ const PostJob = () => {
                     <SelectGroup>
                       {companies.map((company) => {
                         return (
-                          <SelectItem
-                            className={`p-3`}
-                            value={company?.name.toLowerCase()}
-                          >
+                          <SelectItem className={`p-3`} value={company?._id}>
                             {company?.name}
                           </SelectItem>
                         );
@@ -150,11 +187,21 @@ const PostJob = () => {
               )}
             </div>
           </div>
-          <Button
-            className={`w-full mt-5 p-5 cursor-pointer hover:bg-gray-600`}
-          >
-            Post a New Job
-          </Button>
+          {loading ? (
+            <Button
+              className={`cursor-pointer w-full my-4 hover:bg-gray-700 p-5 `}
+            >
+              <Loader2 className="animate-spin mr-2 h-4 w-4" />
+              Please wait
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              className={`cursor-pointer w-full my-4 hover:bg-gray-700 p-5`}
+            >
+              Post a New Job
+            </Button>
+          )}
           {companies.length === 0 && (
             <p className="text-xs font-bold text-red-600 text-center my-3 ">
               *Please register a company first, before posting a job{" "}
