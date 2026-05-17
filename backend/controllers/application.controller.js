@@ -53,7 +53,7 @@ export const applyjob = async (req, res) => {
 export const getAppliedJobs = async (req, res) => {
   try {
     const userId = req.id;
-    const applications = (await Application.find({ applicant: userId }))
+    const applications = await Application.find({ applicant: userId })
       .sort({
         createdAt: -1,
       })
