@@ -52,61 +52,63 @@ const ApplicantsTable = () => {
           {applicants.length < 0 ? (
             <div>There are no applicants yet.</div>
           ) : (
-            applicants?.applications?.map((item) => {
-              return (
-                <TableRow key={item._id}>
-                  <TableCell>{item?.applicant?.fullname}</TableCell>
-                  <TableCell>{item?.applicant?.email}</TableCell>
-                  <TableCell>{item?.applicant?.phoneNumber}</TableCell>
-                  <TableCell>
-                    {item?.applicant?.profile?.resumeOriginalName ? (
-                      <a
-                        className="cursor-pointer italic text-blue-600"
-                        rel="noopener noreferrer"
-                        href={`https://docs.google.com/viewer?url=${encodeURIComponent(item?.applicant?.profile?.resume)}&embedded=true`}
-                        target="_blank"
-                      >
-                        {item?.applicant?.profile?.resumeOriginalName}
-                      </a>
-                    ) : (
-                      <span
-                        onClick={() => toast.error("No Resume")}
-                        className="cursor-pointer font-medium text-red-600"
-                      >
-                        NA
-                      </span>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {new Date(item?.createdAt).toLocaleDateString("en-Us", {
-                      day: "numeric",
-                      month: "long",
-                      year: "numeric",
-                    })}
-                  </TableCell>
-                  <TableCell className={`text-right `}>
-                    <Popover>
-                      <PopoverTrigger>
-                        <MoreHorizontal className="w-5 cursor-pointer" />
-                      </PopoverTrigger>
-                      <PopoverContent className={`w-32`}>
-                        {shortListingStatus.map((status, index) => {
-                          return (
-                            <div
-                              onClick={() => statusHandler(status, item._id)}
-                              className=" cursor-pointer"
-                              key={index}
-                            >
-                              {status}
-                            </div>
-                          );
-                        })}
-                      </PopoverContent>
-                    </Popover>
-                  </TableCell>
-                </TableRow>
-              );
-            })
+            applicants?.applications
+              ?.filter((item) => item?.applicant !== null)
+              .map((item) => {
+                return (
+                  <TableRow key={item._id}>
+                    <TableCell>{item?.applicant?.fullname}</TableCell>
+                    <TableCell>{item?.applicant?.email}</TableCell>
+                    <TableCell>{item?.applicant?.phoneNumber}</TableCell>
+                    <TableCell>
+                      {item?.applicant?.profile?.resumeOriginalName ? (
+                        <a
+                          className="cursor-pointer italic text-blue-600"
+                          rel="noopener noreferrer"
+                          href={`https://docs.google.com/viewer?url=${encodeURIComponent(item?.applicant?.profile?.resume)}&embedded=true`}
+                          target="_blank"
+                        >
+                          {item?.applicant?.profile?.resumeOriginalName}
+                        </a>
+                      ) : (
+                        <span
+                          onClick={() => toast.error("No Resume")}
+                          className="cursor-pointer font-medium text-red-600"
+                        >
+                          NA
+                        </span>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {new Date(item?.createdAt).toLocaleDateString("en-Us", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </TableCell>
+                    <TableCell className={`text-right `}>
+                      <Popover>
+                        <PopoverTrigger>
+                          <MoreHorizontal className="w-5 cursor-pointer" />
+                        </PopoverTrigger>
+                        <PopoverContent className={`w-32`}>
+                          {shortListingStatus.map((status, index) => {
+                            return (
+                              <div
+                                onClick={() => statusHandler(status, item._id)}
+                                className=" cursor-pointer"
+                                key={index}
+                              >
+                                {status}
+                              </div>
+                            );
+                          })}
+                        </PopoverContent>
+                      </Popover>
+                    </TableCell>
+                  </TableRow>
+                );
+              })
           )}
         </TableBody>
       </Table>
