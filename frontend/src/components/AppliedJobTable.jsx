@@ -9,40 +9,42 @@ import {
   TableRow,
 } from "./ui/table";
 import { Badge } from "./ui/badge";
+import { useSelector } from "react-redux";
 
-const jobApplications = [
-  {
-    date: "2026-04-10",
-    jobRole: "Frontend Developer",
-    companyName: "TechNova Pvt Ltd",
-    status: "Accepted",
-  },
-  {
-    date: "2026-04-08",
-    jobRole: "Backend Developer",
-    companyName: "CodeCraft Solutions",
-    status: "Rejected",
-  },
-  {
-    date: "2026-04-05",
-    jobRole: "MERN Stack Developer",
-    companyName: "InnovateX",
-    status: "Pending",
-  },
-  {
-    date: "2026-04-02",
-    jobRole: "React Developer",
-    companyName: "SoftEdge Technologies",
-    status: "Accepted",
-  },
-  {
-    date: "2026-03-30",
-    jobRole: "Next.js Developer",
-    companyName: "FutureStack Labs",
-    status: "Rejected",
-  },
-];
+// const jobApplications = [
+//   {
+//     date: "2026-04-10",
+//     jobRole: "Frontend Developer",
+//     companyName: "TechNova Pvt Ltd",
+//     status: "Accepted",
+//   },
+//   {
+//     date: "2026-04-08",
+//     jobRole: "Backend Developer",
+//     companyName: "CodeCraft Solutions",
+//     status: "Rejected",
+//   },
+//   {
+//     date: "2026-04-05",
+//     jobRole: "MERN Stack Developer",
+//     companyName: "InnovateX",
+//     status: "Pending",
+//   },
+//   {
+//     date: "2026-04-02",
+//     jobRole: "React Developer",
+//     companyName: "SoftEdge Technologies",
+//     status: "Accepted",
+//   },
+//   {
+//     date: "2026-03-30",
+//     jobRole: "Next.js Developer",
+//     companyName: "FutureStack Labs",
+//     status: "Rejected",
+//   },
+// ];
 const AppliedJobTable = () => {
+  const { appliedJobs } = useSelector((store) => store.job);
   return (
     <div>
       <Table>
@@ -56,19 +58,31 @@ const AppliedJobTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {jobApplications.length <= 0 ? (
-            <span className="font-bold  text-lg">No job applied yet.</span>
+          {appliedJobs.length <= 0 ? (
+            <TableRow>
+              <TableCell className="font-bold  text-lg">
+                No job applied yet.
+              </TableCell>
+            </TableRow>
           ) : (
-            jobApplications.map((item, index) => (
-              <TableRow key={index}>
-                <TableCell>{item.date}</TableCell>
-                <TableCell>{item.jobRole}</TableCell>
-                <TableCell>{item.companyName}</TableCell>
-                <TableCell className={`text-right`}>
-                  <Badge>{item.status}</Badge>
-                </TableCell>
-              </TableRow>
-            ))
+            appliedJobs
+              .filter((job) => job.job !== null)
+              .map((item) => (
+                <TableRow key={item._id}>
+                  <TableCell>
+                    {new Date(item.createdAt).toLocaleDateString("en-Us", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </TableCell>
+                  <TableCell>{item?.job?.title}</TableCell>
+                  <TableCell>{item?.job?.company?.name}</TableCell>
+                  <TableCell className={`text-right`}>
+                    <Badge>{item?.status}</Badge>
+                  </TableCell>
+                </TableRow>
+              ))
           )}
         </TableBody>
       </Table>

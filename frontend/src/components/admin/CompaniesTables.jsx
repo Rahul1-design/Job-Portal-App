@@ -75,13 +75,13 @@ const CompaniesTables = () => {
                           <MoreHorizontal className="cursor-pointer" />
                         </PopoverTrigger>
                         <PopoverContent className={`w-32 `}>
-                          <div className="flex items-center gap-2 w-fit">
+                          <div className="flex items-center gap-2 hover:bg-purple-600 px-1 py-2 rounded-lg cursor-pointer">
                             <Edit2 className="w-5" />
                             <span
                               onClick={() =>
                                 navigate(`/admin/companies/${item._id}`)
                               }
-                              className="font-medium cursor-pointer"
+                              className="font-medium"
                             >
                               Edit
                             </span>

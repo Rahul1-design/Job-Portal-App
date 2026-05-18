@@ -1,3 +1,4 @@
+import { Application } from '../models/application.model.js';
 import { Job } from '../models/job.model.js';
 
 // job posted by admin
@@ -108,6 +109,26 @@ export const getAdminJobs = async (req, res) => {
     }
 
     return res.status(200).json({ jobs, success: true });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteJob = async (req, res) => {
+  try {
+    const jobId = req.params.id;
+    const userId = req.id;
+
+    const job = await Job.findOneAndDelete({ _id: jobId, created_by: userId });
+    if (!job) {
+      return res.status(401).json({ message: 'Job not found', success: false });
+    }
+
+    await Application.deleteMany({ job: jobId });
+
+    return res
+      .status(200)
+      .json({ message: 'Job deleted successfully', success: true });
   } catch (error) {
     console.log(error);
   }
