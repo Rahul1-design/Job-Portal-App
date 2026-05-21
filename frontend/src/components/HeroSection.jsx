@@ -12,7 +12,7 @@ const HeroSection = () => {
 
   const searchHandler = () => {
     dispatch(setSearchedQuery(query));
-    navigate("/browse");
+    navigate(`/browse`);
   };
 
   return (
