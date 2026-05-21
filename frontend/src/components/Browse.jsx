@@ -3,6 +3,7 @@ import Navbar from "./shared/Navbar";
 import Job from "./Job";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchedQuery } from "@/redux/jobSlice";
+import useGetAllJobs from "./hooks/useGetAllJobs";
 
 const Browse = () => {
   const { allJobs } = useSelector((store) => store.job);
@@ -11,6 +12,7 @@ const Browse = () => {
     return () => dispatch(setSearchedQuery(""));
   }, [dispatch]);
 
+  useGetAllJobs();
   return (
     <div>
       <Navbar />

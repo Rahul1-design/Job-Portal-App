@@ -7,12 +7,12 @@ import { setSearchedQuery } from "@/redux/jobSlice";
 
 const HeroSection = () => {
   const [query, setQuery] = useState("");
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const searchHandler = () => {
-    navigate("/browse");
     dispatch(setSearchedQuery(query));
+    navigate("/browse");
   };
 
   return (
