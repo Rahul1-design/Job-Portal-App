@@ -1,8 +1,20 @@
 import { Search } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "./ui/button";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setSearchedQuery } from "@/redux/jobSlice";
 
 const HeroSection = () => {
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const searchHandler = () => {
+    navigate("/browse");
+    dispatch(setSearchedQuery(query));
+  };
+
   return (
     <div className="text-center">
       <div className="flex flex-col gap-5 my-10">
@@ -13,17 +25,25 @@ const HeroSection = () => {
           Search, Apply & <br /> Get your{" "}
           <span className="text-[#6A38C2]">Dream Jobs</span>
         </h1>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro
-          obcaecati ea amet odit et dolore delectus accusantium ipsam fugiat!
+        <p className="font-medium text-xl">
+          Explore top career opportunities from leading companies and apply to
+          jobs that match your skills and passion.
         </p>
         <div className="max-md:w-[50%] w-[40%] flex  border border-gray-200 pl-3 rounded-full items-center gap-4 mx-auto shadow-lg">
           <input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
             type="text"
-            className="outline-none border-none w-full "
+            onKeyDown={(e) => {
+              if (e.key == "Enter") {
+                searchHandler();
+              }
+            }}
+            className="outline-none border-none w-full placeholder:text-gray-400 "
             placeholder="Find your dream jobs"
           />
           <Button
+            onClick={searchHandler}
             className={`rounded-r-full bg-[#6A38C2] cursor-pointer hover:brightness-90 h-full py-3 `}
           >
             <Search className="w-5 h-5" />
