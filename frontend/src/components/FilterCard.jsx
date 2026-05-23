@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
 
@@ -24,6 +24,15 @@ const filterData = [
 ];
 
 const FilterCard = () => {
+  const [selectedValue, setSelectedValue] = useState("");
+  const changeHandler = (value) => {
+    setSelectedValue(value);
+  };
+
+  useEffect(() => {
+    console.log(selectedValue);
+  }, [selectedValue]);
+
   return (
     <div className="w-full bg-white p-3 rounded-md">
       <h2 className="text-xl font-bold">Filter Jobs</h2>
@@ -31,15 +40,22 @@ const FilterCard = () => {
       {filterData.map((data, index) => (
         <div key={index}>
           <h2 className="font-bold text-lg">{data.filterType}</h2>
-          <RadioGroup>
-            {data.array.map((item, index) => {
+          <RadioGroup value={selectedValue} onValueChange={changeHandler}>
+            {data.array.map((item, indx) => {
+              const newId = `r${index} - ${indx}`;
               return (
                 <div
-                  key={index}
-                  className="flex gap-3 items-center my-0.5 space-x-2 ml-5"
+                  key={indx}
+                  className="flex space-y-2 gap-3 items-center my-0.5 space-x-1 ml-5"
                 >
-                  <RadioGroupItem value={item} />
-                  <Label>{item}</Label>
+                  <RadioGroupItem
+                    className={`cursor-pointer`}
+                    id={newId}
+                    value={item}
+                  />
+                  <Label className={`cursor-pointer`} htmlFor={newId}>
+                    {item}
+                  </Label>
                 </div>
               );
             })}
