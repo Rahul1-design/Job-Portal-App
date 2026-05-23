@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
+import { useDispatch } from "react-redux";
+import { setSearchedQuery } from "@/redux/jobSlice";
 
 const filterData = [
   {
@@ -28,10 +30,11 @@ const FilterCard = () => {
   const changeHandler = (value) => {
     setSelectedValue(value);
   };
-
+  const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(setSearchedQuery(selectedValue));
     console.log(selectedValue);
-  }, [selectedValue]);
+  }, [dispatch, selectedValue]);
 
   return (
     <div className="w-full bg-white p-3 rounded-md">
@@ -46,7 +49,7 @@ const FilterCard = () => {
               return (
                 <div
                   key={indx}
-                  className="flex space-y-2 gap-3 items-center my-0.5 space-x-1 ml-5"
+                  className="flex space-y-1 gap-3 items-center my-0.5 space-x-1 ml-5"
                 >
                   <RadioGroupItem
                     className={`cursor-pointer`}
