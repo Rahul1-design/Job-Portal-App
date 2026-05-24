@@ -1,7 +1,8 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import cookieParser from 'cookie-parser';
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import connectDB from './utils/db.js';
 import userRoute from './routes/user.route.js';
 import companyRoute from './routes/company.route.js';
@@ -19,8 +20,6 @@ const corsOptions = {
   credentials: true,
 };
 app.use(cors(corsOptions));
-
-dotenv.config({});
 
 const PORT = process.env.PORT || 3000;
 
