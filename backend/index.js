@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: 'process.env.FRONTEND_URL || "http://localhost:5173',
   credentials: true,
 };
 app.use(cors(corsOptions));
@@ -34,7 +34,10 @@ app.get('/', (req, res) => {
   res.send('Hello Darling, we are offically starting the express server');
 });
 
-app.listen(PORT, () => {
-  connectDB();
-  console.log(`Server running at port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   connectDB();
+//   console.log(`Server running at port ${PORT}`);
+// });
+
+connectDB();
+export default app;
