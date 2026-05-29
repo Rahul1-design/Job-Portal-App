@@ -17,6 +17,9 @@ import AdminJobs from "./components/admin/AdminJobs";
 import PostJob from "./components/admin/PostJob";
 import Applicants from "./components/admin/Applicants";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { setLoading } from "./redux/authSlice";
 
 const appRouter = createBrowserRouter([
   {
@@ -100,7 +103,12 @@ const appRouter = createBrowserRouter([
 ]);
 
 function App() {
+  const dispatch = useDispatch();
   useGetCurrentUser();
+  useEffect(() => {
+    dispatch(setLoading(false));
+  }, [dispatch]);
+
   return (
     <>
       <RouterProvider router={appRouter} />
