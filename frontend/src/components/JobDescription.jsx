@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { setSingleJob } from "@/redux/jobSlice";
 import { toast } from "sonner";
+import SkeletonJobDescription from "./SkeletonJobDescription";
 
 const JobDescription = () => {
   const params = useParams();
@@ -22,6 +23,7 @@ const JobDescription = () => {
     ) || false;
 
   const [isApplied, setisApplied] = useState(isInitiallyApplied);
+  const [loading, setLoading] = useState(true);
 
   const applyJobHandler = async () => {
     try {
@@ -53,6 +55,7 @@ const JobDescription = () => {
   useEffect(() => {
     const fetchSingleJob = async () => {
       try {
+        setLoading(true);
         const res = await axios.get(`${JOB_API_END_POINT}/get/${jobId}`, {
           withCredentials: true,
         });
@@ -66,11 +69,13 @@ const JobDescription = () => {
         }
       } catch (error) {
         console.log(error.response.data.message);
+      } finally {
+        setLoading(false);
       }
     };
     fetchSingleJob();
   }, [dispatch, jobId, user?._id]);
-
+  if (loading) return <SkeletonJobDescription />;
   return (
     <div className="max-w-7xl mx-auto my-10">
       <div className="flex justify-between items-center">
