@@ -17,7 +17,8 @@ const useGetCurrentUser = () => {
         }
       } catch (error) {
         console.log(error);
-        console.log("User not logged in");
+        dispatch(setUser(null));
+        console.log("Session expired or user not logged in");
       }
     };
     fetchUserData();
