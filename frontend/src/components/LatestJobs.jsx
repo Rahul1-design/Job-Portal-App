@@ -8,9 +8,6 @@ const LatestJobs = () => {
   const { user } = useSelector((store) => store.auth);
   // const [loading, setLoading] = useState(true);
   const loading = allJobs.length === 0;
-  // useEffect(() => {
-  //   setTimeout(() => {}, 3000);
-  // }, []);
 
   return (
     <div className="max-w-7xl mx-auto my-20">
@@ -22,14 +19,13 @@ const LatestJobs = () => {
         {!user && (
           <div className="text-2xl font-medium">User not logged in</div>
         )}
-        {user &&
-          (loading
-            ? Array(2)
-                .fill(0)
-                .map((_, i) => <SkeletonJob key={i} />)
-            : allJobs
-                .slice(0, 6)
-                .map((job) => <LatestJobCards job={job} key={job._id} />))}
+        {loading
+          ? Array(2)
+              .fill(0)
+              .map((_, i) => <SkeletonJob key={i} />)
+          : allJobs
+              .slice(0, 6)
+              .map((job) => <LatestJobCards job={job} key={job._id} />)}
       </div>
     </div>
   );
