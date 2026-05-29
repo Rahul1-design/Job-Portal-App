@@ -5,7 +5,6 @@ import SkeletonJob from "./SkeletonJob";
 
 const LatestJobs = () => {
   const { allJobs } = useSelector((store) => store.job);
-  const { user } = useSelector((store) => store.auth);
   // const [loading, setLoading] = useState(true);
   const loading = allJobs.length === 0;
 
@@ -16,9 +15,6 @@ const LatestJobs = () => {
       </h1>
       {/* Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 max-lg:m-4 lg:grid-cols-3 gap-4 my-5">
-        {!user && (
-          <div className="text-2xl font-medium">User not logged in</div>
-        )}
         {loading
           ? Array(2)
               .fill(0)

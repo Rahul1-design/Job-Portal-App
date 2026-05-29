@@ -1,4 +1,5 @@
 import { setUser } from "@/redux/authSlice";
+import { persistor } from "@/redux/store";
 import { USER_API_END_POINT } from "@/utils/constant";
 import axios from "axios";
 import React, { useEffect } from "react";
@@ -18,6 +19,7 @@ const useGetCurrentUser = () => {
       } catch (error) {
         console.log(error);
         dispatch(setUser(null));
+        await persistor.purge();
         console.log("Session expired or user not logged in");
       }
     };

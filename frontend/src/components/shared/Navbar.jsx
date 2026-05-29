@@ -8,6 +8,7 @@ import axios from "axios";
 import { USER_API_END_POINT } from "@/utils/constant";
 import { setUser } from "@/redux/authSlice";
 import { toast } from "sonner";
+import { persistor } from "@/redux/store";
 
 function Navbar() {
   const { user } = useSelector((store) => store.auth);
@@ -20,6 +21,7 @@ function Navbar() {
       });
       if (res.data.success) {
         dispatch(setUser(null));
+        await persistor.purge();
         navigate("/");
         toast.success(res.data.message);
       }
