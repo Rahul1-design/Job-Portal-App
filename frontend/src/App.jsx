@@ -20,6 +20,7 @@ import ProtectedRoute from "./components/admin/ProtectedRoute";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { setLoading } from "./redux/authSlice";
+import { setSearchedQuery } from "./redux/jobSlice";
 
 const appRouter = createBrowserRouter([
   {
@@ -107,6 +108,10 @@ function App() {
   useGetCurrentUser();
   useEffect(() => {
     dispatch(setLoading(false));
+  }, [dispatch]);
+  useEffect(() => {
+    dispatch(setLoading(false));
+    dispatch(setSearchedQuery(""));
   }, [dispatch]);
 
   return (

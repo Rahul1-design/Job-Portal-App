@@ -16,7 +16,7 @@ const LatestJobs = () => {
       {/* Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 max-lg:m-4 lg:grid-cols-3 gap-4 my-5">
         {loading
-          ? Array(2)
+          ? Array(3)
               .fill(0)
               .map((_, i) => <SkeletonJob key={i} />)
           : allJobs
