@@ -106,9 +106,7 @@ const appRouter = createBrowserRouter([
 function App() {
   const dispatch = useDispatch();
   useGetCurrentUser();
-  useEffect(() => {
-    dispatch(setLoading(false));
-  }, [dispatch]);
+
   useEffect(() => {
     dispatch(setLoading(false));
     dispatch(setSearchedQuery(""));
