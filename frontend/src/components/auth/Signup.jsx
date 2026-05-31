@@ -151,7 +151,7 @@ const Signup = () => {
             </div>
           </div>
 
-          <div className="flex items-center justify-between gap-5">
+          <div className="flex items-center justify-between w-full gap-5">
             <RadioGroup className="w-fit flex items-center gap-4 my-5">
               <div className="flex items-center gap-3">
                 <Input
@@ -182,8 +182,8 @@ const Signup = () => {
                 </Label>
               </div>
             </RadioGroup>
-            <div className="flex items-center gap-2">
-              <Label>Profile</Label>
+            <div className="flex items-center gap-2 w-1/2">
+              <Label className={"w-40"}>*Profile Picture</Label>
               <Input
                 onChange={changeFileHandler}
                 type="file"

@@ -15,12 +15,17 @@ export const register = async (req, res) => {
     }
 
     const file = req.file;
+    if (!file) {
+      return res
+        .status(400)
+        .json({ message: 'Profie photo is required', success: false });
+    }
 
     const user = await User.findOne({ email });
     if (user) {
       return res
         .status(400)
-        .json({ message: 'User already exist in this email.', sucess: false });
+        .json({ message: 'User already exist in this email.', success: false });
     }
     let cloudResponse;
     if (file) {
