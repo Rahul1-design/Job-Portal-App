@@ -1,20 +1,17 @@
-import React from "react";
 import LatestJobCards from "./LatestJobCards";
 import { useSelector } from "react-redux";
 import SkeletonJob from "./SkeletonJob";
 
 const LatestJobs = () => {
   const { allJobs } = useSelector((store) => store.job);
-  // const [loading, setLoading] = useState(true);
   const loading = allJobs.length === 0;
 
   return (
-    <div className="max-w-7xl mx-auto my-20">
-      <h1 className="text-4xl font-bold">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-16 sm:my-20">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center sm:text-left">
         <span className="text-[#6A38C2]">Latest & Top</span> Job Openings
       </h1>
-      {/* Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 max-lg:m-4 lg:grid-cols-3 gap-4 my-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 my-8">
         {loading
           ? Array(3)
               .fill(0)

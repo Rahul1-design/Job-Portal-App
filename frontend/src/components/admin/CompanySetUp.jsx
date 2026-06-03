@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../shared/Navbar";
 import { Button } from "../ui/button";
 import { ArrowLeft, Loader2 } from "lucide-react";
@@ -95,80 +95,80 @@ const CompanySetUp = () => {
   return (
     <div>
       <Navbar />
-      <div className="lg:max-w-xl container mx-auto -10">
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 my-10">
         <form onSubmit={submitHandler}>
-          <div className="flex items-center gap-5 p-8">
+          <div className="flex items-center gap-4 mb-8">
             <Button
               onClick={() => navigate("/admin/companies")}
-              variant="outline"
-              className={`flex items-center gap-2 text-gray-500 font-semibold cursor-pointer`}
+              variant="ghost"
+              className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
+              type="button"
             >
-              <ArrowLeft />
+              <ArrowLeft className="w-4 h-4" />
               <span>Back</span>
             </Button>
             <h1 className="font-bold text-xl">Company Setup</h1>
           </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <Label className={`font-bold my-1`}>Company Name</Label>
-              <Input
-                type={`text`}
-                name="name"
-                value={input.name}
-                onChange={changeEventHandler}
-              />
+
+          <div className="bg-card border border-border rounded-xl shadow-sm p-6 sm:p-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="space-y-1.5">
+                <Label className="font-medium">Company Name</Label>
+                <Input
+                  type="text"
+                  name="name"
+                  value={input.name}
+                  onChange={changeEventHandler}
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label className="font-medium">Description</Label>
+                <Input
+                  type="text"
+                  name="description"
+                  value={input.description}
+                  onChange={changeEventHandler}
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label className="font-medium">Website</Label>
+                <Input
+                  type="url"
+                  name="website"
+                  value={input.website}
+                  onChange={changeEventHandler}
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label className="font-medium">Location</Label>
+                <Input
+                  type="text"
+                  name="location"
+                  value={input.location}
+                  onChange={changeEventHandler}
+                />
+              </div>
+              <div className="sm:col-span-2 space-y-1.5">
+                <Label className="font-medium">Logo</Label>
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={changeFileHandler}
+                />
+              </div>
             </div>
-            <div>
-              <Label className={`font-bold my-1`}>Description</Label>
-              <Input
-                type={`text`}
-                name="description"
-                value={input.description}
-                onChange={changeEventHandler}
-              />
-            </div>
-            <div>
-              <Label className={`font-bold my-1`}>Website</Label>
-              <Input
-                type={`text`}
-                name="website"
-                value={input.website}
-                onChange={changeEventHandler}
-              />
-            </div>
-            <div>
-              <Label className={`font-bold my-1`}>Location</Label>
-              <Input
-                type={`text`}
-                name="location"
-                value={input.location}
-                onChange={changeEventHandler}
-              />
-            </div>
-            <div>
-              <Label className={`font-bold my-1`}>Logo</Label>
-              <Input
-                type={`file`}
-                accept="image/*"
-                onChange={changeFileHandler}
-              />
-            </div>
+
+            {loading ? (
+              <Button disabled className="w-full mt-8 py-5 cursor-pointer">
+                <Loader2 className="animate-spin mr-2 h-4 w-4" />
+                Please wait
+              </Button>
+            ) : (
+              <Button type="submit" className="w-full mt-8 py-5 cursor-pointer">
+                Update
+              </Button>
+            )}
           </div>
-          {loading ? (
-            <Button
-              className={`cursor-pointer w-full my-4 hover:bg-gray-700 p-5 `}
-            >
-              <Loader2 className="animate-spin mr-2 h-4 w-4" />
-              Please wait
-            </Button>
-          ) : (
-            <Button
-              type="submit"
-              className={`cursor-pointer w-full my-4 hover:bg-gray-700 p-5`}
-            >
-              Update
-            </Button>
-          )}
         </form>
       </div>
     </div>

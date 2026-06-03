@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Table,
   TableBody,
@@ -29,7 +28,7 @@ const CompaniesTables = () => {
     : companies;
 
   return (
-    <div>
+    <div className="overflow-x-auto">
       <Table>
         <TableCaption>A List of your recent registered companies</TableCaption>
         <TableHeader>
@@ -37,62 +36,56 @@ const CompaniesTables = () => {
             <TableHead>Logo</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Date</TableHead>
-            <TableHead className={`text-right`}>Action</TableHead>
+            <TableHead className="text-right">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {filteredCompany?.length <= 0 ? (
             <TableRow>
-              <TableCell className={` text-lg text-bold`}>
-                You haven't registered the company yet.
+              <TableCell colSpan={4} className="font-medium text-lg text-center py-8 text-muted-foreground">
+                You haven't registered a company yet.
               </TableCell>
             </TableRow>
           ) : (
-            <>
-              {filteredCompany?.map((item) => {
-                return (
-                  <TableRow key={item._id}>
-                    <TableCell>
-                      <Avatar>
-                        <AvatarImage
-                          className={`w-8 h-7`}
-                          src={item?.logo}
-                          alt="Company Logo"
-                        />
-                      </Avatar>
-                    </TableCell>
-                    <TableCell>{item?.name}</TableCell>
-                    <TableCell>
-                      {new Date(item?.createdAt).toLocaleString("en-Us", {
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric",
-                      })}
-                    </TableCell>
-                    <TableCell className={`text-right`}>
-                      <Popover>
-                        <PopoverTrigger>
-                          <MoreHorizontal className="cursor-pointer" />
-                        </PopoverTrigger>
-                        <PopoverContent className={`w-32 `}>
-                          <div className="flex items-center gap-2 hover:bg-purple-600 px-1 py-2 rounded-lg cursor-pointer">
-                            <Edit2 className="w-5" />
-                            <span
-                              onClick={() =>
-                                navigate(`/admin/companies/${item._id}`)
-                              }
-                              className="font-medium"
-                            >
-                              Edit
-                            </span>
-                          </div>
-                        </PopoverContent>
-                      </Popover>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </>
+            filteredCompany?.map((item) => (
+              <TableRow key={item._id}>
+                <TableCell>
+                  <Avatar>
+                    <AvatarImage
+                      className="w-8 h-8 object-cover"
+                      src={item?.logo}
+                      alt="Company Logo"
+                    />
+                  </Avatar>
+                </TableCell>
+                <TableCell className="font-medium whitespace-nowrap">{item?.name}</TableCell>
+                <TableCell className="whitespace-nowrap">
+                  {new Date(item?.createdAt).toLocaleString("en-US", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </TableCell>
+                <TableCell className="text-right">
+                  <Popover>
+                    <PopoverTrigger>
+                      <MoreHorizontal className="cursor-pointer w-5 h-5" />
+                    </PopoverTrigger>
+                    <PopoverContent className="w-32">
+                      <div
+                        onClick={() =>
+                          navigate(`/admin/companies/${item._id}`)
+                        }
+                        className="flex items-center gap-2 hover:bg-muted px-2 py-2 rounded-lg cursor-pointer transition-colors"
+                      >
+                        <Edit2 className="w-4 h-4" />
+                        <span className="font-medium text-sm">Edit</span>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                </TableCell>
+              </TableRow>
+            ))
           )}
         </TableBody>
       </Table>

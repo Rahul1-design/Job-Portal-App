@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
 import { useDispatch } from "react-redux";
 import { setSearchedQuery } from "@/redux/jobSlice";
+import { X } from "lucide-react";
 
 const filterData = [
   {
@@ -25,38 +26,56 @@ const filterData = [
   },
 ];
 
-const FilterCard = () => {
+const FilterCard = ({ className = "" }) => {
   const [selectedValue, setSelectedValue] = useState("");
+  const dispatch = useDispatch();
+
   const changeHandler = (value) => {
     setSelectedValue(value);
   };
-  const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(setSearchedQuery(selectedValue));
-    console.log(selectedValue);
   }, [dispatch, selectedValue]);
 
+  const clearFilter = () => {
+    setSelectedValue("");
+  };
+
   return (
-    <div className="w-full bg-white p-3 rounded-md">
-      <h2 className="text-xl font-bold">Filter Jobs</h2>
-      <hr className="mt-3" />
+    <div className={`w-full bg-card p-4 rounded-xl border border-border shadow-sm ${className}`}>
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="text-lg font-bold">Filter Jobs</h2>
+        {selectedValue && (
+          <button
+            onClick={clearFilter}
+            className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
+          >
+            <X className="w-3 h-3" />
+            Clear
+          </button>
+        )}
+      </div>
+      <hr className="mb-4" />
       {filterData.map((data, index) => (
-        <div key={index}>
-          <h2 className="font-bold text-lg">{data.filterType}</h2>
+        <div key={index} className="mb-4">
+          <h2 className="font-semibold text-sm mb-2 text-muted-foreground uppercase tracking-wide">
+            {data.filterType}
+          </h2>
           <RadioGroup value={selectedValue} onValueChange={changeHandler}>
             {data.array.map((item, indx) => {
-              const newId = `r${index} - ${indx}`;
+              const newId = `r${index}-${indx}`;
               return (
                 <div
                   key={indx}
-                  className="flex space-y-1 gap-3 items-center my-0.5 space-x-1 ml-5"
+                  className="flex items-center gap-3 py-1"
                 >
                   <RadioGroupItem
-                    className={`cursor-pointer`}
+                    className="cursor-pointer"
                     id={newId}
                     value={item}
                   />
-                  <Label className={`cursor-pointer`} htmlFor={newId}>
+                  <Label className="cursor-pointer text-sm font-normal" htmlFor={newId}>
                     {item}
                   </Label>
                 </div>

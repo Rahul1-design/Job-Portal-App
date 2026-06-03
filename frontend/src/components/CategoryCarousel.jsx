@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Carousel,
   CarouselContent,
@@ -27,17 +26,20 @@ const CategoryCarousel = () => {
     dispatch(setSearchedQuery(item));
   };
   return (
-    <div>
-      <Carousel className={`w-full max-w-xl max-md:max-w-sm mx-auto my-20`}>
-        <CarouselContent className={``}>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-16 sm:my-20">
+      <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8">
+        Browse by <span className="text-[#6A38C2]">Category</span>
+      </h2>
+      <Carousel className="w-full max-w-xs sm:max-w-sm md:max-w-xl lg:max-w-2xl mx-auto">
+        <CarouselContent>
           {category.map((cat, index) => (
             <CarouselItem
               key={index}
-              className={`md:basis-1/2 lg:basis-1/3 flex justify-center md:justify-around `}
+              className="basis-1/2 md:basis-1/3 lg:basis-1/3 flex justify-center"
             >
               <Button
                 onClick={() => searchHandler(cat)}
-                className={`rounded-full cursor-pointer`}
+                className="rounded-full cursor-pointer px-6"
                 variant="outline"
               >
                 {cat}
@@ -45,8 +47,8 @@ const CategoryCarousel = () => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        <CarouselPrevious className="hidden sm:flex" />
+        <CarouselNext className="hidden sm:flex" />
       </Carousel>
     </div>
   );

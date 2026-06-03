@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Navbar from "../shared/Navbar";
 import ApplicantsTable from "./ApplicantsTable";
 import axios from "axios";
@@ -25,7 +25,6 @@ const Applicants = () => {
         );
 
         if (res.data.success) {
-          console.log(res.data.job);
           dispatch(setAllApplicants(res.data.job));
         }
       } catch (error) {
@@ -38,11 +37,13 @@ const Applicants = () => {
   return (
     <div>
       <Navbar />
-      <div className="max-w-7xl mx-auto">
-        <h1 className="font-bold text-xl my-5">
-          Applicants ({applicants?.applications?.length})
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-10">
+        <h1 className="font-bold text-xl sm:text-2xl my-5">
+          Applicants ({applicants?.applications?.length || 0})
         </h1>
-        <ApplicantsTable />
+        <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
+          <ApplicantsTable />
+        </div>
       </div>
     </div>
   );

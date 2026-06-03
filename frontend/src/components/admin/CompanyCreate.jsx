@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Navbar from "../shared/Navbar";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
@@ -9,6 +9,7 @@ import { COMPANY_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
 import { useDispatch } from "react-redux";
 import { setSingleCompany } from "@/redux/companySlice";
+import { ArrowLeft } from "lucide-react";
 
 const CompanyCreate = () => {
   const navigate = useNavigate();
@@ -45,39 +46,50 @@ const CompanyCreate = () => {
   return (
     <div>
       <Navbar />
-      <div className="lg:max-w-4xl container mx-auto">
-        <div className="my-10">
-          <h1 className="font-bold text-2xl">Your Company Name</h1>
-          <p className="text-gray-500">
-            What would you like to give your company name? you can change this
-            later.
-          </p>
-        </div>
-        <Label htmlFor="1" className={`font-medium text-lg cursor-pointer`}>
-          Company Name
-        </Label>
-        <Input
-          name="CompanyName"
-          onChange={(e) => setCompanyName(e.target.value)}
-          id="1"
-          type={`text`}
-          className={`my-2 p-5`}
-          placeholder="Esewa, Microsoft, Pathao etc..."
-        />
-        <div className="flex items-center gap-2 my-10">
-          <Button
-            className={`cursor-pointer`}
-            variant="outline"
-            onClick={() => navigate("/admin/companies")}
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={() => registerNewCompany()}
-            className={`hover:bg-gray-600 cursor-pointer`}
-          >
-            Continue
-          </Button>
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 my-10">
+        <Button
+          onClick={() => navigate("/admin/companies")}
+          variant="ghost"
+          className="mb-6 gap-2 text-muted-foreground hover:text-foreground"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back
+        </Button>
+
+        <div className="bg-card border border-border rounded-xl shadow-sm p-6 sm:p-8">
+          <div className="mb-6">
+            <h1 className="font-bold text-2xl">Your Company Name</h1>
+            <p className="text-muted-foreground text-sm mt-1">
+              What would you like to give your company name? You can change this
+              later.
+            </p>
+          </div>
+          <Label htmlFor="company" className="font-medium text-base">
+            Company Name
+          </Label>
+          <Input
+            id="company"
+            name="CompanyName"
+            onChange={(e) => setCompanyName(e.target.value)}
+            type="text"
+            className="my-2 py-5"
+            placeholder="Esewa, Microsoft, Pathao etc..."
+          />
+          <div className="flex items-center gap-3 mt-8">
+            <Button
+              variant="outline"
+              onClick={() => navigate("/admin/companies")}
+              className="cursor-pointer"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => registerNewCompany()}
+              className="cursor-pointer"
+            >
+              Continue
+            </Button>
+          </div>
         </div>
       </div>
     </div>

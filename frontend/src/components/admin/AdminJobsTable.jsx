@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Table,
   TableBody,
@@ -8,12 +7,10 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { Avatar, AvatarImage } from "../ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Edit2, Eye, MoreHorizontal, Trash2 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Job from "../Job";
 import axios from "axios";
 import { JOB_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
@@ -52,7 +49,7 @@ const AdminJobsTable = () => {
     }
   };
   return (
-    <div>
+    <div className="overflow-x-auto">
       <Table>
         <TableCaption>A list of your recent posted jobs</TableCaption>
         <TableHeader>
@@ -60,72 +57,64 @@ const AdminJobsTable = () => {
             <TableHead>Company Name</TableHead>
             <TableHead>Role</TableHead>
             <TableHead>Date</TableHead>
-            <TableHead className={`text-right`}>Action</TableHead>
+            <TableHead className="text-right">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {filteredJobs?.length <= 0 ? (
             <TableRow>
-              <TableCell className={` text-lg text-bold`}>
-                You haven't registered the job yet.
+              <TableCell colSpan={4} className="font-medium text-lg text-center py-8 text-muted-foreground">
+                You haven't registered a job yet.
               </TableCell>
             </TableRow>
           ) : (
-            <>
-              {filteredJobs?.map((item) => {
-                return (
-                  <TableRow key={item._id}>
-                    <TableCell>{item?.company?.name}</TableCell>
-                    <TableCell>{item?.title}</TableCell>
-                    <TableCell>
-                      {new Date(item?.createdAt).toLocaleString("en-Us", {
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric",
-                      })}
-                    </TableCell>
-                    <TableCell className={`text-right`}>
-                      <Popover>
-                        <PopoverTrigger>
-                          <MoreHorizontal className="cursor-pointer" />
-                        </PopoverTrigger>
-                        <PopoverContent className={`w-32 `}>
-                          <div
-                            onClick={() =>
-                              navigate(`/admin/companies/${item._id}`)
-                            }
-                            className="flex items-center gap-2 cursor-pointer px-1 py-2 hover:bg-purple-500 rounded-lg "
-                          >
-                            <Edit2 className="w-5" />
-                            <span className="font-medium cursor-pointer">
-                              Edit
-                            </span>
-                          </div>
-                          <div
-                            onClick={() =>
-                              navigate(`/admin/jobs/${item._id}/applicants`)
-                            }
-                            className="flex items-center gap-2 cursor-pointer px-1 py-2 hover:text-white hover:bg-gray-500 rounded-lg"
-                          >
-                            <Eye className="w-5" />
-                            <span className="cursor-pointer font-medium">
-                              Applicants
-                            </span>
-                          </div>
-                          <div
-                            onClick={() => deleteHandler(item._id)}
-                            className="flex gap-2 items-center cursor-pointer hover:bg-red-500 py-2 rounded-lg px-1"
-                          >
-                            <Trash2 />
-                            <span className="font-medium ">Delete</span>
-                          </div>
-                        </PopoverContent>
-                      </Popover>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </>
+            filteredJobs?.map((item) => (
+              <TableRow key={item._id}>
+                <TableCell className="font-medium whitespace-nowrap">{item?.company?.name}</TableCell>
+                <TableCell className="whitespace-nowrap">{item?.title}</TableCell>
+                <TableCell className="whitespace-nowrap">
+                  {new Date(item?.createdAt).toLocaleString("en-US", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </TableCell>
+                <TableCell className="text-right">
+                  <Popover>
+                    <PopoverTrigger>
+                      <MoreHorizontal className="cursor-pointer w-5 h-5" />
+                    </PopoverTrigger>
+                    <PopoverContent className="w-36">
+                      <div
+                        onClick={() =>
+                          navigate(`/admin/companies/${item._id}`)
+                        }
+                        className="flex items-center gap-2 cursor-pointer px-2 py-2 hover:bg-muted rounded-lg transition-colors"
+                      >
+                        <Edit2 className="w-4 h-4" />
+                        <span className="font-medium text-sm">Edit</span>
+                      </div>
+                      <div
+                        onClick={() =>
+                          navigate(`/admin/jobs/${item._id}/applicants`)
+                        }
+                        className="flex items-center gap-2 cursor-pointer px-2 py-2 hover:bg-muted rounded-lg transition-colors"
+                      >
+                        <Eye className="w-4 h-4" />
+                        <span className="font-medium text-sm">Applicants</span>
+                      </div>
+                      <div
+                        onClick={() => deleteHandler(item._id)}
+                        className="flex items-center gap-2 cursor-pointer px-2 py-2 hover:bg-red-100 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                        <span className="font-medium text-sm">Delete</span>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                </TableCell>
+              </TableRow>
+            ))
           )}
         </TableBody>
       </Table>
