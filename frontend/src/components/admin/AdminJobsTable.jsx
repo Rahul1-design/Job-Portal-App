@@ -63,15 +63,22 @@ const AdminJobsTable = () => {
         <TableBody>
           {filteredJobs?.length <= 0 ? (
             <TableRow>
-              <TableCell colSpan={4} className="font-medium text-lg text-center py-8 text-muted-foreground">
+              <TableCell
+                colSpan={4}
+                className="font-medium text-lg text-center py-8 text-muted-foreground"
+              >
                 You haven't registered a job yet.
               </TableCell>
             </TableRow>
           ) : (
             filteredJobs?.map((item) => (
               <TableRow key={item._id}>
-                <TableCell className="font-medium whitespace-nowrap">{item?.company?.name}</TableCell>
-                <TableCell className="whitespace-nowrap">{item?.title}</TableCell>
+                <TableCell className="font-medium whitespace-nowrap">
+                  {item?.company?.name}
+                </TableCell>
+                <TableCell className="whitespace-nowrap">
+                  {item?.title}
+                </TableCell>
                 <TableCell className="whitespace-nowrap">
                   {new Date(item?.createdAt).toLocaleString("en-US", {
                     day: "numeric",
@@ -85,15 +92,6 @@ const AdminJobsTable = () => {
                       <MoreHorizontal className="cursor-pointer w-5 h-5" />
                     </PopoverTrigger>
                     <PopoverContent className="w-36">
-                      <div
-                        onClick={() =>
-                          navigate(`/admin/companies/${item._id}`)
-                        }
-                        className="flex items-center gap-2 cursor-pointer px-2 py-2 hover:bg-muted rounded-lg transition-colors"
-                      >
-                        <Edit2 className="w-4 h-4" />
-                        <span className="font-medium text-sm">Edit</span>
-                      </div>
                       <div
                         onClick={() =>
                           navigate(`/admin/jobs/${item._id}/applicants`)
