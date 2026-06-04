@@ -48,10 +48,10 @@ app.get('/', (req, res) => {
   res.send('Hello Darling, we are offically starting the express server');
 });
 
-app.listen(PORT, () => {
-  connectDB();
-  console.log(`Server running at port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   connectDB();
+//   console.log(`Server running at port ${PORT}`);
+// });
 
-// connectDB();
+connectDB();
 export default app;
